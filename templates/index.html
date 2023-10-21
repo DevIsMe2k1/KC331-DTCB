@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ĐỒ ÁN DTCB</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+    crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="/static/assets/css/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- topbar -->
+  <div class="topbar">
+    <div class="logo">
+      <img src="/static/assets/img/CTU.png" alt="" height="80px"> <!-- Điều chỉnh chiều cao của hình ảnh logo -->
+      <a href="https://www.ctu.edu.vn" style="text-decoration: none;">
+        <h2><strong>Cần Thơ University</strong></h2>
+      </a>
+    </div>
+    <div class="menu">
+      <ul class="list-menu">
+        <li class="menu-item active"><a href="#">AO SỐ 1</a></li>
+        <li class="menu-item"><a href="#">AO SỐ 2</a></li>
+        <li class="menu-item"><a href="#">AO SỐ 3</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- dashboard -->
+  <div class="dashboard">
+    <div class="titile">
+      <h1>GIÁM SÁT CHẤT LƯỢNG NƯỚC TRONG AO NUÔI</h1>
+    </div>
+    <div class="table">
+      <!-- this part for parameter live -->
+      <div class="table-left">
+        <h3>DỮ LIỆU CẢM BIẾN</h3>
+        <div class="parameter-live">
+          <div class="parameter-content">
+            <img src="/static/assets/img/temp-icon.png" alt="icon">
+            <div class="parameter-items">
+              <div class="value" id="temp-val">00</div>
+              <h4>Nhiệt độ</h4>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="note-content">
+            <div class="note-name">Note:</div>
+            <div class="note-cap" id="temp-content"></div>
+          </div>
+        </div>
+        <div class="parameter-live">
+          <div class="parameter-content">
+            <img src="/static/assets/img/PH-icon.png" alt="icon">
+            <div class="parameter-items">
+              <div class="value" id="ph-val">00</div>
+              <h4>Nồng độ PH</h4>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="note-content">
+            <div class="note-name">Note:</div>
+            <div class="note-cap" id="ph-content"></div>
+          </div>
+        </div>
+        <div class="parameter-live">
+          <div class="parameter-content">
+            <img src="/static/assets/img/dirty-icon.png" alt="icon">
+            <div class="parameter-items">
+              <div class="value" id="dirty-val">00</div>
+              <h4>Độ đục</h4>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="note-content">
+            <div class="note-name">Note:</div>
+            <div class="note-cap" id="dirty-content"></div>
+          </div>
+        </div>
+      </div>
+      <!-- this part for chart -->
+      <div class="table-between">
+        <div class="card-items">
+          <div class="cards">
+            <div class="size">
+              <div class="option">
+                <div class="icon">
+                  <button class="option-edit hidden" id="edit-size-btn">Chỉnh sửa</button>
+                  <i class="fas fa-ellipsis-v" id="toggle-size"></i>
+                </div>
+              </div>
+              <div class="size-content">
+                <h4>Kích thước</h4>
+                <div class="value" id="size">00</div>
+                <div class="form-content hidden" id="size-form-content">
+                </div>
+              </div>
+              <div class="save">
+                <button class="hidden" id="size-btn">Lưu</button>
+              </div>
+            </div>
+          </div>
+          <div class="cards">
+            <div class="time">
+              <div class="option">
+                <div class="icon">
+                  <button class="option-edit hidden" id="edit-time-btn">Chỉnh sửa</button>
+                  <i class="fas fa-ellipsis-v" id="toggle-time"></i>
+                </div>
+              </div>
+              <div class="card-time">
+                <div class="time">
+                  <div class="calendar">
+                    <span class="day-name">Day</span>
+                    <span class="day-number">00</span>
+                    <span class="month-name">Month</span>
+                    <span class="year">000</span>
+                  </div>
+                  <div class="digital-clock">
+                    <span class="hour">00</span>
+                    <span class="dots">:</span>
+                    <span class="minutes">00</span>
+                    <div class="right-side">
+                      <span class="period">AM/PM</span>
+                      <span class="seconds">00</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="time-content">
+                  <div class="old-time">
+                    <strong>Ngày thả :</strong>
+                    <div class="print-time">
+                      <span class="day-start">00/</span>
+                      <span class="month-start">00/</span>
+                      <span class="year-start">0000</span></div>
+                    <input type="date" class = "hidden" id ="date-input" min="2022-01-01">
+                  </div>
+                  <h4>Ngày tuổi</h4>
+                  <div class="value" id="day">00</div>
+                  <div class="save">
+                    <button class="hidden" id="time-btn">Lưu</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-line">
+          <div class="chart">
+            <h5>Biểu đồ giám sát chất lượng nước trong ngày</h5>
+            <canvas id="realTimeChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- this part fort parameter defautlt -->
+      <div class="table-right">
+        <h3>DỮ LIỆU SO SÁNH</h3>
+        <div class="parameter-default">
+          <div class="cards">
+            <div class="option">
+              <div class="icon">
+                <button class="option-edit hidden" id="edit-temp-btn">Chỉnh sửa</button>
+                <i class="fas fa-ellipsis-v" id="toggle-temp"></i>
+              </div>
+            </div>
+            <div class="content">
+              <h4>Nhiệt độ</h4>
+              <div class="limit-max">
+                <h6>MAX:</h6>
+                <h7 id="temp-max-value">00</h7>
+                <input type="number" class="hidden" id="temp-max-input"  value="0">
+              </div>
+              <div class="limit-min">
+                <h6>MIN :</h6>
+                <h7 id="temp-min-value">00</h7>
+                <input type="number" class="hidden" id="temp-min-input"  value="0">
+              </div>
+            </div>
+            <div class="save">
+              <button class="hidden" id="temp-btn">Lưu</button>
+            </div>
+          </div>
+          <div class="cards">
+            <div class="option">
+              <div class="icon">
+                <button class="option-edit hidden" id="edit-ph-btn">Chỉnh sửa</button>
+                <i class="fas fa-ellipsis-v" id="toggle-ph"></i>
+              </div>
+            </div>
+            <div class="content">
+              <h4>Độ pH</h4>
+              <div class="limit-max">
+                <h6>MAX:</h6>
+                <h7 id="ph-max-value">00</h7>
+                <input type="number" class="hidden" id="ph-max-input" value="0">
+              </div>
+              <div class="limit-min">
+                <h6>MIN :</h6>
+                <h7 id="ph-min-value">00</h7>
+                <input type="number" class="hidden" id="ph-min-input" value="0">
+              </div>
+            </div>
+            <div class="save">
+              <button class="hidden" id="ph-btn">Lưu</button>
+            </div>
+          </div>
+          <div class="cards">
+            <div class="option">
+              <div class="icon">
+                <button class="option-edit hidden" id="edit-dirty-btn">Chỉnh sửa</button>
+                <i class="fas fa-ellipsis-v" id="toggle-dirty"></i>
+              </div>
+            </div>
+            <div class="content">
+              <h4>Độ đục</h4>
+              <div class="limit-max">
+                <h6>MAX:</h6>
+                <h7 id="dirty-max-value">00</h7>
+                <input type="number" class="hidden" id="dirty-max-input" value="0">
+              </div>
+              <div class="limit-min">
+                <h6>MIN :</h6>
+                <h7 id="dirty-min-value">00</h7>
+                <input type="number" class="hidden" id="dirty-min-input" value="0">
+              </div>
+            </div>
+            <div class="save">
+              <button class="hidden" id="dirty-btn">Lưu</button>
+            </div>
+          </div>
+          <div class="predict-btn">
+            <input type="submit" value="Dự đoán bằng máy học" id="predict-btn">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <!-- Include firebase database -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+  <!-- Firebase configuration -->
+  <script src="/static/assets/js/firebase.js"></script>"
+  <script src="/static/assets/js/main.js"></script>
+  <script src="/static/assets/js/chart.js"></script>
+</body>
+
+</html>

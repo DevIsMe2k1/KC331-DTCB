@@ -1,0 +1,265 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Style for the topbar */
+.topbar {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: center;
+  z-index: 1;
+  background-color: #2cc185;
+}
+.logo {
+  display: flex;
+  align-items: center; 
+  margin-left: 10px; 
+}
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+.list-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+.list-menu .active {
+  background-color: #fff; /* Màu nền khi phần tử có class active */
+  line-height: 59px;
+  padding : 0 40px;
+}
+.menu-item {
+  margin-left: auto;
+  margin-right: auto;
+}
+.menu-item a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+.menu-item a:hover {
+  color: #f07313;
+}
+/* dashboard */
+.titile h1{
+  padding-top: 90px;
+  text-align: center;
+  font-size: 30px;
+  color: #f07313;
+  font-weight: bold;
+
+}
+h3{
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+  color: #f07313;
+  font-weight: bold;
+
+}
+h4{
+  color:#f07313;
+  font-size:20px;
+  font-weight: bold;
+}
+h5{
+  color:#f07313;
+  font-size:24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+h6{
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+h7{
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 20px;
+  margin-left: auto;
+}
+.table {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr;
+  padding: 10px;
+  grid-gap: 10px;
+  width: 100%;
+}
+/* print parameters live */
+.table-left, .table-between, .table-right {
+  width: 100%;
+  box-sizing: border-box;
+}
+.parameter-live img {
+  height: 100px;
+  padding: 20px;
+}
+.parameter-live {
+  height: 190px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(152, 164, 193, 0.8);
+  margin-bottom: 5px;
+}
+.parameter-live .line{
+  width: 100%;
+  height: 1px;
+  background: gray;
+}
+.parameter-content {
+  display: flex;
+  text-align: center;
+  font-size: 16px;
+}
+.table-left .value{
+  font-size: 35px;
+}
+.note-content {
+  font-size: 18px;
+  padding: 10px 20px;
+  display: flex;
+}
+.note-content .note-name{
+  margin-top: 2px;
+  color: #f07313;
+  margin-right: 10px;
+}
+.note-content .note-cap{
+  margin-top: 5px;
+}
+.parameter-live .parameter-items{
+  margin-top: 5px;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+/* between */
+.table-between .card-items{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 10px;
+  grid-gap: 10px;
+  width: 100%;
+  margin-top : 40px;
+}
+
+.card-items .cards{
+  position: relative;
+  width: 100%;
+  height: 150px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(152, 164, 193, 0.8);
+
+}
+.cards .option{
+  display:flex;
+  margin-right: 10px;
+}
+.table-between .value{
+  font-size:24px;
+  font-weight: bold;
+}
+.icon{
+  margin-top: 10px;
+  margin-left: auto;
+  display:flex;
+}
+.option-edit{
+  position: absolute;
+  right:20px;
+  font-size: 10px;
+  padding :2px;
+  box-shadow: 0 1px 2px rgba(152, 164, 193, 0.8);
+}
+.hidden{
+  display: none;
+}
+.form-content input{
+  font-size: 20px;
+  width: 80px;
+}
+.option-edit:hover{
+  transform: scale(1.1);
+}
+.card-time{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  width: 100%;
+}
+/* digital clock */
+.digital-clock {
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+  color : #f07313;
+}
+.hour, .minutes,.size-content {
+  padding: 12px;
+}
+.table-between .chart-line{
+  width: 100%;
+}
+.old-time{
+  display: flex;
+  margin-left: 10px;
+}
+.old-time .print-time{
+  margin-left: 5px;
+}
+.table-between .chart{
+  padding: 13px 20px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(152, 164, 193, 0.8);
+}
+/* print parameter default */
+.parameter-default {
+  width: 100%;
+  height: 100%;
+}
+.table-right .cards{
+  position: relative;
+  width: 100%;
+  height: 150px;
+  text-align: center;
+  background: #fff;
+  margin-bottom:5px;
+  box-shadow: 0 1px 5px rgba(152, 164, 193, 0.8);
+}
+.limit-max, .limit-min{
+  display: flex;
+  padding :5px;
+}
+.content input{
+  width: 50px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+.save button{
+  padding :0 20px 0 20px;
+  background-color : #2cc185;
+}
+.predict-btn{
+  width: 100%;
+  text-align: center;
+}
+.predict-btn input{
+  height: 40px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #2cc185;
+  font-weight: 400;
+  border-radius: 10px;
+}
+.predict-btn input:hover{
+  transform: scale(1.1);
+}
