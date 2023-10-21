@@ -240,7 +240,7 @@ const app = {
       MAX = snapshot.val();
       if (MAX < Value) {
         Content.style.fontSize = '13px';
-        Content.innerHTML = `<a href="#" style = "color : red">${MaxContent}</a>`
+        Content.innerHTML = `<a href="https://biogency.com.vn/12-chi-tieu-moi-truong-ao-nuoi-tom-can-biet/" style = "color : red;text-decoration: none;">${MaxContent}</a>`
       }
       else if (MAX >= Value) {
         Content.style.color = 'green';
@@ -252,7 +252,7 @@ const app = {
       MIN = snapshot.val();
       if (MIN > Value) {
         Content.style.fontSize = '13px';
-        Content.innerHTML = `<a href="#" style = "color : red">${MinContent}</a>`
+        Content.innerHTML = `<a href="https://biogency.com.vn/12-chi-tieu-moi-truong-ao-nuoi-tom-can-biet/" style = "color : red;text-decoration: none;">${MinContent}</a>`
       }
     });
   },
