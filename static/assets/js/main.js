@@ -19,24 +19,14 @@ const DayStart = firebase.database().ref('day-start');
 const MonthStart = firebase.database().ref('month-start');
 const YearStart = firebase.database().ref('year-start');
 const DateStart = firebase.database().ref('date-start');
+const editBtn = $('#edit-btn');
+const exitBtn = $('.exit');
+const toggleSize = $('#toggle-size')
+const toggleTime = $('#toggle-time')
+const toggleTemp = $('#toggle-temp');
+const togglePH = $('#toggle-ph');
+const toggleDirty = $('#toggle-dirty')
 const app = {
-  //active Tab
-  activeTab() {
-    const activeTab = $$('.menu-item')
-    activeTab.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        console.log(tab);
-        $('.menu-item.active').classList.remove('active');
-        tab.classList.add('active');
-      })
-    })
-  },
-  //handle icon ...
-  HandleIconBtn(IconBtn, EditBtn) {
-    IconBtn.addEventListener('click', function () {
-      EditBtn.classList.toggle('hidden');
-    });
-  },
   // get Parameter form FireBase
   getParameterToFireBase() {
     const tempRef = firebase.database().ref('temp');
@@ -57,7 +47,7 @@ const app = {
     SizeRef.on('value', function (snapshot) {
       const SizeLive = snapshot.val();
       $("#size").innerHTML = SizeLive + 'mm';
-      $('#size-form-content').innerHTML = `<input type="number" id="size-input" value="${SizeLive}">`;
+      $('#size-form-content').innerHTML = `<input type="number" id="size-input" style = "width:60px;"value="${SizeLive}">`;
     });
     TempMaxRef.on('value', function (snapshot) {
       TempMaxInput.value = snapshot.val()
@@ -80,18 +70,14 @@ const app = {
   },
   //size editor
   HandleEditSize() {
-    const toggleSize = $('#toggle-size')
     const sizeBtn = $('#size-btn');
-    const editSizeBtn = $('#edit-size-btn');
     const size = $('#size');
     const sizeFormContent = $('#size-form-content');
     const sizeInput = $("#size-input");
-    this.HandleIconBtn(toggleSize, editSizeBtn)
-    editSizeBtn.addEventListener('click', function () {
+    toggleSize.addEventListener('click', function () {
       sizeBtn.classList.toggle('hidden');
-      editSizeBtn.classList.add('hidden')
-      size.classList.add("hidden");
-      sizeFormContent.classList.remove("hidden");
+      size.classList.toggle("hidden");
+      sizeFormContent.classList.toggle("hidden");
       sizeInput.focus();
     });
     sizeBtn.addEventListener('click', function () {
@@ -99,31 +85,27 @@ const app = {
       newSizeValue = $("#size-input").value;
       SizeRef.set(newSizeValue);
       size.textContent = newSizeValue + 'mm';
-      sizeFormContent.classList.add("hidden");
-      size.classList.remove("hidden");
+      sizeFormContent.classList.toggle("hidden");
+      size.classList.toggle("hidden");
     });
   },
   //edit time
   HandleEditTime() {
-    const toggleTime = $('#toggle-time')
     const TimeBtn = $('#time-btn');
-    const editTimeBtn = $('#edit-time-btn');
     const Time = $('.print-time');
     const DateInput = $('#date-input');
     const _this = this;
-    this.HandleIconBtn(toggleTime, editTimeBtn);
-    editTimeBtn.addEventListener('click', function () {
+    toggleTime.addEventListener('click', function () {
       TimeBtn.classList.toggle('hidden');
-      editTimeBtn.classList.add('hidden')
-      Time.classList.add('hidden')
-      DateInput.classList.remove('hidden')
+      Time.classList.toggle('hidden')
+      DateInput.classList.toggle('hidden')
     });
     TimeBtn.addEventListener('click', function () {
       _this.GetDateToFireBase();
       _this.PushDateToFireBase();
       TimeBtn.classList.toggle('hidden')
-      DateInput.classList.add('hidden')
-      Time.classList.remove('hidden')
+      DateInput.classList.toggle('hidden')
+      Time.classList.toggle('hidden')
     });
   },
   GetDateToFireBase() {
@@ -166,12 +148,11 @@ const app = {
   HandleEditBtn(editBtn, SaveBtn, MaxVal, MinVal, MaxInput, MinInput) {
     editBtn.addEventListener('click', function () {
       SaveBtn.classList.toggle('hidden');
-      editBtn.classList.add('hidden');
-      MaxVal.classList.add("hidden");
-      MinVal.classList.add("hidden");
-      MaxInput.classList.remove("hidden");
+      MaxVal.classList.toggle("hidden");
+      MinVal.classList.toggle("hidden");
+      MaxInput.classList.toggle("hidden");
       MaxInput.focus();
-      MinInput.classList.remove("hidden");
+      MinInput.classList.toggle("hidden");
     });
   },
   HandleSaveBtn(MaxRef, MinRef, SaveBtn, MaxVal, MinVal, MaxInput, MinInput) {
@@ -183,10 +164,10 @@ const app = {
       MinRef.set(newMinValue);
       MaxVal.textContent = newMaxValue;
       MinVal.textContent = newMinValue;
-      MaxInput.classList.add("hidden");
-      MinInput.classList.add("hidden");
-      MaxVal.classList.remove("hidden");
-      MinVal.classList.remove("hidden");
+      MaxInput.classList.toggle("hidden");
+      MinInput.classList.toggle("hidden");
+      MaxVal.classList.toggle("hidden");
+      MinVal.classList.toggle("hidden");
     });
   },
   HandleSavePredictions(MaxRef, MinRef,valueMax,ValueMin){
@@ -203,8 +184,7 @@ const app = {
       TEMPMIN = snapshot.val();
       $('#temp-min-value').innerHTML = TEMPMIN;
     });
-    this.HandleIconBtn($('#toggle-temp'), $('#edit-temp-btn'))
-    this.HandleEditBtn($('#edit-temp-btn'), $('#temp-btn'), $('#temp-max-value'), $('#temp-min-value'), TempMaxInput, TempMinInput)
+    this.HandleEditBtn(toggleTemp, $('#temp-btn'), $('#temp-max-value'), $('#temp-min-value'), TempMaxInput, TempMinInput)
     this.HandleSaveBtn(TempMaxRef, TempMinRef, $('#temp-btn'), $('#temp-max-value'), $('#temp-min-value'), TempMaxInput, TempMinInput);
   },
   //edit ph
@@ -217,8 +197,7 @@ const app = {
       PHMIN = snapshot.val();
       $('#ph-min-value').innerHTML = PHMIN;
     });
-    this.HandleIconBtn($('#toggle-ph'), $('#edit-ph-btn'))
-    this.HandleEditBtn($('#edit-ph-btn'), $('#ph-btn'), $('#ph-max-value'), $('#ph-min-value'), PHMaxInput, PHMinInput)
+    this.HandleEditBtn(togglePH, $('#ph-btn'), $('#ph-max-value'), $('#ph-min-value'), PHMaxInput, PHMinInput)
     this.HandleSaveBtn(PHMaxRef, PHMinRef, $('#ph-btn'), $('#ph-max-value'), $('#ph-min-value'), PHMaxInput, PHMinInput);
   },
   //dirty
@@ -231,47 +210,47 @@ const app = {
       DIRTYMIN = snapshot.val();
       $('#dirty-min-value').innerHTML = DIRTYMIN;
     });
-    this.HandleIconBtn($('#toggle-dirty'), $('#edit-dirty-btn'))
-    this.HandleEditBtn($('#edit-dirty-btn'), $('#dirty-btn'), $('#dirty-max-value'), $('#dirty-min-value'), DirtyMaxInput, DirtyMinInput)
+    this.HandleEditBtn(toggleDirty, $('#dirty-btn'), $('#dirty-max-value'), $('#dirty-min-value'), DirtyMaxInput, DirtyMinInput)
     this.HandleSaveBtn(DIRTYMaxRef, DIRTYMinRef, $('#dirty-btn'), $('#dirty-max-value'), $('#dirty-min-value'), DirtyMaxInput, DirtyMinInput);
   },
   updateNote(MaxRef, MinRef, Content, MAX, MIN, MaxContent, MinContent, NormalContent, Value) {
     MaxRef.on('value', function (snapshot) {
       MAX = snapshot.val();
       if (MAX < Value) {
-        Content.style.fontSize = '13px';
-        Content.innerHTML = `<a href="https://biogency.com.vn/12-chi-tieu-moi-truong-ao-nuoi-tom-can-biet/" style = "color : red;text-decoration: none;">${MaxContent}</a>`
+        Content.innerHTML = `<div style = "color : red">${MaxContent}
+        <span><a href="https://biogency.com.vn/12-chi-tieu-moi-truong-ao-nuoi-tom-can-biet/" target="_blank">See more</a></span>
+        </div>`
       }
       else if (MAX >= Value) {
         Content.style.color = 'green';
-        Content.style.fontSize = '17px';
         Content.textContent = NormalContent
       }
     });
     MinRef.on('value', function (snapshot) {
       MIN = snapshot.val();
       if (MIN > Value) {
-        Content.style.fontSize = '13px';
-        Content.innerHTML = `<a href="https://biogency.com.vn/12-chi-tieu-moi-truong-ao-nuoi-tom-can-biet/" style = "color : red;text-decoration: none;">${MinContent}</a>`
+        Content.innerHTML = `<div style = "color : red">${MinContent}
+        <span><a href="https://biogency.com.vn/12-chi-tieu-moi-truong-ao-nuoi-tom-can-biet/" target="_blank">See more</a></span>
+        </div>`
       }
     });
   },
   updateNoteContent() {
     //temp
     const tempContent = $("#temp-content");
-    var noteTempMax = 'Nhiệt độ nước QUÁ CAO có thể gây stress, suy giảm sức kháng, giảm tốc độ tăng trưởng và làm giảm khả năng hấp thụ oxi của tôm.'
-    var noteTempMin = 'Nhiệt độ nước QUÁ THẤP có thể làm chậm tốc độ trao đổi chất và gây thiếu oxi, dẫn đến tử vong đột ngột và giảm tốc độ tăng trưởng.'
-    var noteTempNormal = 'Nhiệt độ đang duy trì ở mức ổn định'
+    var noteTempMax = 'Nhiệt độ nước QUÁ CAO. '
+    var noteTempMin = 'Nhiệt độ nước QUÁ THẤP. '
+    var noteTempNormal = 'Nhiệt độ ổn định'
     //ph
     const phContent = $("#ph-content");
-    var notephMax = 'Độ pH nước QUÁ CAO có thể gây stress, giảm tăng trưởng và ảnh hưởng đến sức kháng của tôm.'
-    var notephMin = 'Độ pH nước QUÁ THẤP có thể gây stress, suy giảm sức kháng và làm chậm tốc độ tăng trưởng của tôm.'
-    var notephNormal = 'Độ PH đang duy trì ở mức ổn định'
+    var notephMax = 'Độ pH nước QUÁ CAO... '
+    var notephMin = 'Độ pH nước QUÁ THẤP... '
+    var notephNormal = 'Độ PH ổn định'
     //dirty
     const DirtyContent = $("#dirty-content");
-    var noteDirtyMax = 'Độ đục QUÁ CAO gây khó khăn cho tôm tìm thức ăn, làm giảm tốc độ tăng trưởng và ảnh hưởng đến sức kháng của chúng.'
-    var noteDirtyMin = 'Độ đục QUÁ THẤP có thể tạo ra tình trạng ánh sáng quá mạnh, gây căng thẳng cho tôm và ảnh hưởng đến hệ thống thị giác của chúng.'
-    var noteDirtyNormal = 'Độ đục của nước đang duy trì ở mức ổn định'
+    var noteDirtyMax = 'Độ đục QUÁ CAO... '
+    var noteDirtyMin = 'Độ đục QUÁ THẤP... '
+    var noteDirtyNormal = 'Độ đục của nước ổn định'
 
     this.updateNote(TempMaxRef, TempMinRef, tempContent, TEMPMAX, TEMPMIN, noteTempMax, noteTempMin, noteTempNormal, tempValue)
     this.updateNote(PHMaxRef, PHMinRef, phContent, PHMAX, PHMIN, notephMax, notephMin, notephNormal, pHValue)
@@ -349,7 +328,6 @@ const app = {
       this.updateNoteContent();
     }, 3000);
     setInterval(this.updateTime, 1000);
-    this.activeTab();
     this.GetDateToFireBase();
     this.getParameterToFireBase();
     this.HandleEditSize();

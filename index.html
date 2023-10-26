@@ -5,250 +5,228 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ĐỒ ÁN DTCB</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-    integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
-    crossorigin="anonymous" />
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link href="static/assets/css/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="/static/assets/css/style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
   <!-- topbar -->
   <div class="topbar">
-    <div class="logo">
-      <img src="static/assets/img/CTU.png" alt="" height="80px"> <!-- Điều chỉnh chiều cao của hình ảnh logo -->
-      <a href="https://www.ctu.edu.vn" style="text-decoration: none;">
-        <h2><strong>Cần Thơ University</strong></h2>
-      </a>
-    </div>
-    <div class="menu">
-      <ul class="list-menu">
-        <li class="menu-item active"><a href="#">AO SỐ 1</a></li>
-        <li class="menu-item"><a href="#">AO SỐ 2</a></li>
-        <li class="menu-item"><a href="#">AO SỐ 3</a></li>
-      </ul>
-    </div>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1 p-3 fw-bold">GIÁM SÁT CHẤT LƯỢNG NƯỚC TRONG AO NUÔI</span>
+      </div>
   </div>
-
+  </nav>
+  </div>
   <!-- dashboard -->
-  <div class="dashboard">
-    <div class="titile">
-      <h1>GIÁM SÁT CHẤT LƯỢNG NƯỚC TRONG AO NUÔI</h1>
-    </div>
-    <div class="table">
-      <!-- this part for parameter live -->
-      <div class="table-left">
-        <h3>DỮ LIỆU CẢM BIẾN</h3>
-        <div class="parameter-live">
-          <div class="parameter-content">
-            <img src="static/assets/img/temp-icon.png" alt="icon">
-            <div class="parameter-items">
-              <div class="value" id="temp-val">00</div>
-              <h4>Nhiệt độ</h4>
+  <div class="p-4 container-fluid">
+    <div class="row">
+      <!-- Parameter live -->
+      <div class="col-4">
+        <div class="row m-1 bg-white border border-#e8e5e5">
+          <div class="d-flex p-2">
+            <div class="col p-2"><img src="/static/assets/img/temp-icon.png" alt="icon"></div>
+            <div class="col text-center">
+              <div class="value fs-1 fw-bold" id="temp-val">00</div>
+              <div class="fs-3">Nhiệt độ</div>
             </div>
           </div>
           <div class="line"></div>
-          <div class="note-content">
-            <div class="note-name">Note:</div>
-            <div class="note-cap" id="temp-content"></div>
+          <div class="d-flex fs-5">
+            <div class=" p-3 fw-bold text-warning">NOTE:</div>
+            <div class="p-3" id="temp-content"></div>
           </div>
         </div>
-        <div class="parameter-live">
-          <div class="parameter-content">
-            <img src="static/assets/img/PH-icon.png" alt="icon">
-            <div class="parameter-items">
-              <div class="value" id="ph-val">00</div>
-              <h4>Nồng độ PH</h4>
+        <div class="row m-1 bg-white border border-#e8e5e5">
+          <div class="d-flex p-2">
+            <div class="col p-2"><img src="/static/assets/img/PH-icon.png" alt="icon"></div>
+            <div class="col text-center">
+              <div class="value fs-1 fw-bold" id="ph-val">00</div>
+              <div class="fs-3">Nồng độ PH</div>
             </div>
           </div>
           <div class="line"></div>
-          <div class="note-content">
-            <div class="note-name">Note:</div>
-            <div class="note-cap" id="ph-content"></div>
+          <div class="d-flex fs-5">
+            <div class="p-3 fw-bold text-warning">NOTE:</div>
+            <div class="p-3" id="ph-content"></div>
           </div>
         </div>
-        <div class="parameter-live">
-          <div class="parameter-content">
-            <img src="static/assets/img/dirty-icon.png" alt="icon">
-            <div class="parameter-items">
-              <div class="value" id="dirty-val">00</div>
-              <h4>Độ đục</h4>
+        <div class="row m-1 bg-white border border-#e8e5e5">
+          <div class="d-flex p-2">
+            <div class="col p-2"><img src="/static/assets/img/dirty-icon.png" alt="icon"></div>
+            <div class="col text-center">
+              <div class="value fs-1 fw-bold" id="dirty-val">00</div>
+              <div class="fs-3">Độ đục</div>
             </div>
           </div>
           <div class="line"></div>
-          <div class="note-content">
-            <div class="note-name">Note:</div>
-            <div class="note-cap" id="dirty-content"></div>
+          <div class="d-flex fs-5">
+            <div class="p-3 fw-bold text-warning">NOTE:</div>
+            <div class="p-3" id="dirty-content"></div>
           </div>
         </div>
       </div>
-      <!-- this part for chart -->
-      <div class="table-between">
-        <div class="card-items">
-          <div class="cards">
-            <div class="size">
-              <div class="option">
-                <div class="icon">
-                  <button class="option-edit hidden" id="edit-size-btn">Chỉnh sửa</button>
-                  <i class="fas fa-ellipsis-v" id="toggle-size"></i>
-                </div>
+      <!-- End Parameter live -->
+      <!-- chart -->
+      <div class="col-6">
+        <div class="row" style="height: 170px;">
+          <div class="m-1 bg-white border border-#e8e5e5 col-4 text-center">
+            <div class="text-center">
+              <div class="d-flex mt-2">
+                <div class="fs-3  text-success">Kích thước : </div>
+                <i class="bi bi-pencil-fill ms-auto text-warning mt-2" id="toggle-size"></i>
               </div>
-              <div class="size-content">
-                <h4>Kích thước</h4>
-                <div class="value" id="size">00</div>
-                <div class="form-content hidden" id="size-form-content">
-                </div>
+              <div class="value fs-2 fw-bold mt-2" id="size">00</div>
+              <div class=" hidden form-content mt-3" id="size-form-content">
               </div>
-              <div class="save">
-                <button class="hidden" id="size-btn">Lưu</button>
-              </div>
+              <button type="button" class="hidden mt-2" id="size-btn">Lưu</button>
             </div>
           </div>
-          <div class="cards">
-            <div class="time">
-              <div class="option">
-                <div class="icon">
-                  <button class="option-edit hidden" id="edit-time-btn">Chỉnh sửa</button>
-                  <i class="fas fa-ellipsis-v" id="toggle-time"></i>
+          <div class="m-1 bg-white border border-#e8e5e5 col-8 text-center">
+            <div class="d-flex"> <i class="bi bi-pencil-fill ms-auto text-warning" id="toggle-time"></i></div>
+            <div class="d-flex">
+              <div class="col">
+                <div class="calendar">
+                  <span class="day-name">Day</span>
+                  <span class="day-number">00</span>
+                  <span class="month-name">Month</span>
+                  <span class="year">000</span>
+                </div>
+                <div class="digital-clock fs-5 fw-bold">
+                  <span class="hour">00</span>
+                  <span class="dots">:</span>
+                  <span class="minutes">00</span>
+                  <div class="right-side fs-5 fw-bold">
+                    <span class="period">AM/PM</span>
+                    <span class="seconds">00</span>
+                  </div>
                 </div>
               </div>
-              <div class="card-time">
-                <div class="time">
-                  <div class="calendar">
-                    <span class="day-name">Day</span>
-                    <span class="day-number">00</span>
-                    <span class="month-name">Month</span>
-                    <span class="year">000</span>
+              <div class="col">
+                <div class="d-flex justify-content-center">
+                  <strong>Ngày thả :</strong>
+                  <div class="print-time">
+                    <span class="day-start">00/</span>
+                    <span class="month-start">00/</span>
+                    <span class="year-start">0000</span>
                   </div>
-                  <div class="digital-clock">
-                    <span class="hour">00</span>
-                    <span class="dots">:</span>
-                    <span class="minutes">00</span>
-                    <div class="right-side">
-                      <span class="period">AM/PM</span>
-                      <span class="seconds">00</span>
-                    </div>
-                  </div>
+                  <input type="date" class="hidden" id="date-input" min="2022-01-01">
                 </div>
-                <div class="time-content">
-                  <div class="old-time">
-                    <strong>Ngày thả :</strong>
-                    <div class="print-time">
-                      <span class="day-start">00/</span>
-                      <span class="month-start">00/</span>
-                      <span class="year-start">0000</span></div>
-                    <input type="date" class = "hidden" id ="date-input" min="2022-01-01">
-                  </div>
-                  <h4>Ngày tuổi</h4>
-                  <div class="value" id="day">00</div>
-                  <div class="save">
-                    <button class="hidden" id="time-btn">Lưu</button>
-                  </div>
-                </div>
+                <div class="fs-5  text-success">Ngày tuổi</div>
+                <div class="value fs-4 fw-bold" id="day">00</div>
               </div>
             </div>
+            <button type="button" class="hidden" id="time-btn">Lưu</button>
           </div>
         </div>
-        <div class="chart-line">
-          <div class="chart">
-            <h5>Biểu đồ giám sát chất lượng nước trong ngày</h5>
+        <div class="row bg-white border border-#e8e5e5">
+          <div class="chart p-3">
+            <div class="fs-4 fw-bold text-center">Biểu đồ giám sát chất lượng nước trong ngày</div>
             <canvas id="realTimeChart"></canvas>
           </div>
         </div>
       </div>
-      <!-- this part fort parameter defautlt -->
-      <div class="table-right">
-        <h3>DỮ LIỆU SO SÁNH</h3>
-        <div class="parameter-default">
-          <div class="cards">
-            <div class="option">
-              <div class="icon">
-                <button class="option-edit hidden" id="edit-temp-btn">Chỉnh sửa</button>
-                <i class="fas fa-ellipsis-v" id="toggle-temp"></i>
-              </div>
-            </div>
-            <div class="content">
-              <h4>Nhiệt độ</h4>
-              <div class="limit-max">
-                <h6>MAX:</h6>
-                <h7 id="temp-max-value">00</h7>
-                <input type="number" class="hidden" id="temp-max-input"  value="0">
-              </div>
-              <div class="limit-min">
-                <h6>MIN :</h6>
-                <h7 id="temp-min-value">00</h7>
-                <input type="number" class="hidden" id="temp-min-input"  value="0">
-              </div>
-            </div>
-            <div class="save">
-              <button class="hidden" id="temp-btn">Lưu</button>
-            </div>
+      <!-- end chart -->
+      <!-- Parameter default -->
+      <div class="col">
+        <div class="row m-1 bg-white border border-#e8e5e5" style="height: 160px;">
+          <div class="d-flex mt-3">
+            <div class="fs-5 text-success">Nhiệt độ tối ưu : </div>
+            <i class="bi bi-pencil-fill ms-auto text-warning mt-1" id="toggle-temp"></i>
           </div>
-          <div class="cards">
-            <div class="option">
-              <div class="icon">
-                <button class="option-edit hidden" id="edit-ph-btn">Chỉnh sửa</button>
-                <i class="fas fa-ellipsis-v" id="toggle-ph"></i>
+          <div class="p-3 pb-5">
+            <div class="d-flex">
+              <div class="col fs-5">MAX :</div>
+              <div class="d-flex">
+                <div class="col fs-6 fw-bold" id="temp-max-value">00</div>
               </div>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="temp-max-input" value="0">
             </div>
-            <div class="content">
-              <h4>Độ pH</h4>
-              <div class="limit-max">
-                <h6>MAX:</h6>
-                <h7 id="ph-max-value">00</h7>
-                <input type="number" class="hidden" id="ph-max-input" value="0">
+            <div class="d-flex mt-1">
+              <div class="col fs-5">MIN :</div>
+              <div class="d-flex">
+                <div class="col fs-6 fw-bold ms-auto" id="temp-min-value">00</div>
               </div>
-              <div class="limit-min">
-                <h6>MIN :</h6>
-                <h7 id="ph-min-value">00</h7>
-                <input type="number" class="hidden" id="ph-min-input" value="0">
-              </div>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="temp-min-input" value="0">
             </div>
-            <div class="save">
-              <button class="hidden" id="ph-btn">Lưu</button>
-            </div>
+            <div class="text-center"><button class="hidden" id="temp-btn">Lưu</button></div>
           </div>
-          <div class="cards">
-            <div class="option">
-              <div class="icon">
-                <button class="option-edit hidden" id="edit-dirty-btn">Chỉnh sửa</button>
-                <i class="fas fa-ellipsis-v" id="toggle-dirty"></i>
-              </div>
-            </div>
-            <div class="content">
-              <h4>Độ đục</h4>
-              <div class="limit-max">
-                <h6>MAX:</h6>
-                <h7 id="dirty-max-value">00</h7>
-                <input type="number" class="hidden" id="dirty-max-input" value="0">
-              </div>
-              <div class="limit-min">
-                <h6>MIN :</h6>
-                <h7 id="dirty-min-value">00</h7>
-                <input type="number" class="hidden" id="dirty-min-input" value="0">
-              </div>
-            </div>
-            <div class="save">
-              <button class="hidden" id="dirty-btn">Lưu</button>
-            </div>
+        </div>
+        <div class="row m-1 bg-white border border-#e8e5e5" style="height: 160px;">
+          <div class="d-flex mt-3">
+            <div class="fs-5 text-success">Độ pH tối ưu :</div>
+            <i class="bi bi-pencil-fill ms-auto text-warning mt-1" id="toggle-ph"></i>
           </div>
-          <div class="predict-btn">
-            <input type="submit" value="Dự đoán bằng máy học" id="predict-btn">
+          <div class="p-3 pb-5">
+            <div class="d-flex">
+              <div class="col fs-5">MAX :</div>
+              <div class="d-flex">
+                <div class="col fs-6 fw-bold" id="ph-max-value">00</div>
+              </div>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="ph-max-input" value="0">
+            </div>
+            <div class="d-flex mt-1">
+              <div class="col fs-5">MIN :</div>
+              <div class="d-flex">
+                <div class="col fs-6 fw-bold ms-auto" id="ph-min-value">00</div>
+              </div>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="ph-min-input" value="0">
+            </div>
+            <div class="text-center"><button class="hidden" id="ph-btn">Lưu</button></div>
+          </div>
+        </div>
+        <div class="row m-1 bg-white border border-#e8e5e5" style="height: 160px;">
+          <div class="d-flex mt-3">
+            <div class="fs-5 text-success">Độ đục tối ưu :</div>
+            <i class="bi bi-pencil-fill ms-auto text-warning mt-1" id="toggle-dirty"></i>
+          </div>
+          <div class="p-3 pb-5">
+            <div class="d-flex">
+              <div class="col fs-5">MAX :</div>
+              <div class="d-flex">
+                <div class="col fs-6 ms-auto fw-bold" id="dirty-max-value">00</div>
+              </div>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="dirty-max-input" value="0">
+            </div>
+            <div class="d-flex mt-1">
+              <div class="col fs-5">MIN :</div>
+              <div class="d-flex">
+                <div class="col fs-6 fw-bold ms-auto" id="dirty-min-value">00</div>
+              </div>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="dirty-min-input" value="0">
+            </div>
+            <div class="text-center"><button class="hidden" id="dirty-btn">Lưu</button></div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="predict-btn mt-3">
+            <input class="p-2 rounded-pill bg-success text-light" type="submit" value="Dự đoán bằng máy học"
+              id="predict-btn">
           </div>
         </div>
       </div>
+      <!--End Parameter default -->
     </div>
   </div>
+  <!-- end dashborad -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
   <!-- Include firebase database -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
   <!-- Firebase configuration -->
-  <script src="static/assets/js/firebase.js"></script>"
-  <script src="static/assets/js/main.js"></script>
-  <script src="static/assets/js/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="/static/assets/js/firebase.js"></script>"
+  <script src="/static/assets/js/main.js"></script>
+  <script src="/static/assets/js/chart.js"></script>
 </body>
 
 </html>
