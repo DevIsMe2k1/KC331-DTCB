@@ -1,6 +1,4 @@
-const tempRef = firebase.database().ref('temp');
-const pHRef = firebase.database().ref('pH');
-const dirtyRef = firebase.database().ref('dirty');
+import { tempRef, pHRef, turbRef } from './main.js';
 const chartCanvas = document.getElementById("realTimeChart");
 const ctx = chartCanvas.getContext("2d");
 const chart = new Chart(ctx, {
@@ -55,11 +53,11 @@ const chart = new Chart(ctx, {
 });
 
 // Update the chart with new data
-function updateChart(time, tempValue, pHValue, dirtyValue) {
+function updateChart(time, tempValue, pHValue, turbValue) {
     chart.data.labels.push(time);
     chart.data.datasets[0].data.push(tempValue);
     chart.data.datasets[1].data.push(pHValue);
-    chart.data.datasets[2].data.push(dirtyValue);
+    chart.data.datasets[2].data.push(turbValue);
 
     // Remove the oldest data when the limit is reached (20 data points)
     if (chart.data.labels.length > 10) {
@@ -79,9 +77,9 @@ tempRef.on('value', (snapshot) => {
     const tempValue = snapshot.val();
     pHRef.on('value', (snapshot) => {
         const pHValue = snapshot.val();
-        dirtyRef.on('value', (snapshot) => {
-            const dirtyValue = snapshot.val();
-            updateChart(time, tempValue, pHValue, dirtyValue);
+        turbRef.on('value', (snapshot) => {
+            const turbValue = snapshot.val();
+            updateChart(time, tempValue, pHValue, turbValue);
         });
     });
 });

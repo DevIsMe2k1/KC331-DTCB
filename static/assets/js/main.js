@@ -1,37 +1,87 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
-var newSizeValue, tempValue, pHValue, DirtyValue;
-var TEMPMAX, TEMPMIN, PHMAX, PHMIN, DIRTYMAX, DIRTYMIN;
-const TempMaxRef = firebase.database().ref('temp-max');
-const TempMinRef = firebase.database().ref('temp-min');
-const TempMaxInput = $('#temp-max-input');
-const TempMinInput = $('#temp-min-input');
-const PHMaxRef = firebase.database().ref('ph-max');
-const PHMinRef = firebase.database().ref('ph-min');
-const PHMaxInput = $('#ph-max-input');
-const PHMinInput = $('#ph-min-input');
-const DIRTYMaxRef = firebase.database().ref('dirty-max');
-const DIRTYMinRef = firebase.database().ref('dirty-min');
-const DirtyMaxInput = $('#dirty-max-input');
-const DirtyMinInput = $('#dirty-min-input');
+var tempValue, pHValue, turbValue;
+var TEMPMAX, TEMPMIN, PHMAX, PHMIN, turbMAX, turbMIN;
+//Đọc các giá trị từ firebase
+export const tempRef = firebase.database().ref('temp');
+export const pHRef = firebase.database().ref('pH');
+export const turbRef = firebase.database().ref('turb');
+export const TempMaxRef = firebase.database().ref('temp-max');
+export const TempMinRef = firebase.database().ref('temp-min');
+export const PHMaxRef = firebase.database().ref('ph-max');
+export const PHMinRef = firebase.database().ref('ph-min');
+export const turbMaxRef = firebase.database().ref('turb-max');
+export const turbMinRef = firebase.database().ref('turb-min');
 const SizeRef = firebase.database().ref('size');
+const delayRef = firebase.database().ref('delay');
 const DayStart = firebase.database().ref('day-start');
 const MonthStart = firebase.database().ref('month-start');
 const YearStart = firebase.database().ref('year-start');
 const DateStart = firebase.database().ref('date-start');
-const editBtn = $('#edit-btn');
-const exitBtn = $('.exit');
-const toggleSize = $('#toggle-size')
-const toggleTime = $('#toggle-time')
-const toggleTemp = $('#toggle-temp');
-const togglePH = $('#toggle-ph');
-const toggleDirty = $('#toggle-dirty')
+const inputs = {
+  TempMaxInput: $('#temp-max-input'),
+  TempMinInput: $('#temp-min-input'),
+  PHMaxInput: $('#ph-max-input'),
+  PHMinInput: $('#ph-min-input'),
+  turbMaxInput: $('#turb-max-input'),
+  turbMinInput: $('#turb-min-input'),
+  sizeInput: $('#size-input'),
+  delayInput: $('#delay-input'),
+};
+const SizeEditor = {
+  inputElement: inputs.sizeInput,
+  buttonElement: $('#size-btn'),
+  displayElement: $('#size'),
+  firebaseRef: SizeRef,
+  toggleElement: $('#toggle-size'),
+  displayText: (value) => value + 'mm',
+};
+const DelayEditor = {
+  inputElement: inputs.delayInput,
+  buttonElement: $('#delay-btn'),
+  displayElement: $('.delay-value'),
+  firebaseRef: delayRef,
+  toggleElement: $("#toggle-delay"),
+  displayText: (value) => value + 's',
+};
+const tempEditor = {
+  MaxInput: inputs.TempMaxInput,
+  MinInput: inputs.TempMinInput,
+  toggleElement: $('#toggle-temp'),
+  buttonElement: $('#temp-btn'),
+  firebaseMaxRef: TempMaxRef,
+  firebaseMinRef: TempMinRef,
+  MaxValueElement: $('#temp-max-value'),
+  MinValueElement: $('#temp-min-value'),
+  displayText: (value) => value,
+};
+const phEditor = {
+  MaxInput: inputs.PHMaxInput,
+  MinInput: inputs.PHMinInput,
+  toggleElement: $('#toggle-ph'),
+  buttonElement: $('#ph-btn'),
+  firebaseMaxRef: PHMaxRef,
+  firebaseMinRef: PHMinRef,
+  MaxValueElement: $('#ph-max-value'),
+  MinValueElement: $('#ph-min-value'),
+  displayText: (value) => value,
+};
+const turbEditor = {
+  MaxInput: inputs.turbMaxInput,
+  MinInput: inputs.turbMinInput,
+  toggleElement: $('#toggle-turb'),
+  buttonElement: $('#turb-btn'),
+  firebaseMaxRef: turbMaxRef,
+  firebaseMinRef: turbMinRef,
+  MaxValueElement: $('#turb-max-value'),
+  MinValueElement: $('#turb-min-value'),
+  displayText: (value) => value,
+};
+
 const app = {
-  // get Parameter form FireBase
+  // get Parameter form FireBase 
   getParameterToFireBase() {
-    const tempRef = firebase.database().ref('temp');
-    const pHRef = firebase.database().ref('pH');
-    const DirtyRef = firebase.database().ref('dirty');
+    const RefArray = [TempMaxRef, TempMinRef, PHMaxRef, PHMinRef, turbMaxRef, turbMinRef,SizeRef, delayRef,];
     tempRef.on('value', function (snapshot) {
       tempValue = snapshot.val();
       $('#temp-val').innerHTML = tempValue.toFixed(1) + '°C';
@@ -40,74 +90,69 @@ const app = {
       pHValue = snapshot.val();
       $('#ph-val').innerHTML = pHValue.toFixed(1);
     });
-    DirtyRef.on('value', function (snapshot) {
-      DirtyValue = snapshot.val();
-      $('#dirty-val').innerHTML = DirtyValue;
+    turbRef.on('value', function (snapshot) {
+      turbValue = snapshot.val();
+      $('#turb-val').innerHTML = turbValue;
     });
-    SizeRef.on('value', function (snapshot) {
-      const SizeLive = snapshot.val();
-      $("#size").innerHTML = SizeLive + 'mm';
-      $('#size-form-content').innerHTML = `<input type="number" id="size-input" style = "width:60px;"value="${SizeLive}">`;
-    });
-    TempMaxRef.on('value', function (snapshot) {
-      TempMaxInput.value = snapshot.val()
-    });
-    TempMinRef.on('value', function (snapshot) {
-      TempMinInput.value = snapshot.val()
-    });
-    PHMaxRef.on('value', function (snapshot) {
-      PHMaxInput.value = snapshot.val()
-    });
-    PHMinRef.on('value', function (snapshot) {
-      PHMinInput.value = snapshot.val()
-    });
-    DIRTYMaxRef.on('value', function (snapshot) {
-      DirtyMaxInput.value = snapshot.val()
-    });
-    DIRTYMinRef.on('value', function (snapshot) {
-      DirtyMinInput.value = snapshot.val()
+    RefArray.forEach((ref, index) => {
+      ref.on('value', (snapshot) => {
+        const inputKey = Object.keys(inputs)[index];
+        inputs[inputKey].value =snapshot.val();
+      });
     });
   },
-  //size editor
-  HandleEditSize() {
-    const sizeBtn = $('#size-btn');
-    const size = $('#size');
-    const sizeFormContent = $('#size-form-content');
-    const sizeInput = $("#size-input");
-    toggleSize.addEventListener('click', function () {
-      sizeBtn.classList.toggle('hidden');
-      size.classList.toggle("hidden");
-      sizeFormContent.classList.toggle("hidden");
-      sizeInput.focus();
+  // hàm xử lý sự kiện chỉnh sửa dashboard
+  HandleEditor(){
+    const toggle = [SizeEditor.toggleElement,DelayEditor.toggleElement,$('#toggle-time'),tempEditor.toggleElement,phEditor.toggleElement,turbEditor.toggleElement]
+    $('.calendar').classList.toggle('mt-4');
+    $('.date-cofig').classList.toggle('mt-4');
+    $('#toggle-edit').addEventListener('click',function() {
+      $('.calendar').classList.toggle('mt-4');
+      $('.date-cofig').classList.toggle('mt-4');
+      toggle.forEach(ref => {
+        ref.classList.toggle('hidden');
+      })
     });
-    sizeBtn.addEventListener('click', function () {
-      sizeBtn.classList.toggle('hidden')
-      newSizeValue = $("#size-input").value;
-      SizeRef.set(newSizeValue);
-      size.textContent = newSizeValue + 'mm';
-      sizeFormContent.classList.toggle("hidden");
-      size.classList.toggle("hidden");
+    $('.calendar').classList.add('mt-4');
+  },
+  //Xử lý sự kiện chỉnh sửa kích thước và thời gian lấy mẫu
+  setupEditor1(editor) {
+    editor.firebaseRef.on('value', (snapshot) => {
+      const value = snapshot.val();
+      editor.displayElement.textContent = editor.displayText(value);
+    });
+    editor.toggleElement.addEventListener('click', () => {
+      editor.buttonElement.classList.toggle('hidden');
+      editor.displayElement.classList.toggle('hidden');
+      editor.inputElement.classList.toggle('hidden');
+      editor.inputElement.focus();
+    });
+    editor.buttonElement.addEventListener('click', () => {
+      editor.buttonElement.classList.toggle('hidden');
+      const newValue = editor.inputElement.value;
+      editor.firebaseRef.set(newValue);
+      editor.displayElement.textContent = editor.displayText(newValue);
+      editor.inputElement.classList.toggle('hidden');
+      editor.displayElement.classList.toggle('hidden');
     });
   },
-  //edit time
+  //xử lý sự kiện chỉnh sửa thời gian thả
   HandleEditTime() {
-    const TimeBtn = $('#time-btn');
-    const Time = $('.print-time');
-    const DateInput = $('#date-input');
     const _this = this;
-    toggleTime.addEventListener('click', function () {
-      TimeBtn.classList.toggle('hidden');
-      Time.classList.toggle('hidden')
-      DateInput.classList.toggle('hidden')
+    $('#toggle-time').addEventListener('click', function () {
+      $('#time-btn').classList.toggle('hidden');
+      $('.print-time').classList.toggle('hidden')
+      $('#date-input').classList.toggle('hidden')
     });
-    TimeBtn.addEventListener('click', function () {
+    $('#time-btn').addEventListener('click', function () {
       _this.GetDateToFireBase();
       _this.PushDateToFireBase();
-      TimeBtn.classList.toggle('hidden')
-      DateInput.classList.toggle('hidden')
-      Time.classList.toggle('hidden')
+      $('#time-btn').classList.toggle('hidden')
+      $('#date-input').classList.toggle('hidden')
+      $('.print-time').classList.toggle('hidden')
     });
   },
+  //hàm lấy các giá trị ngày/tháng/năm từ firebase
   GetDateToFireBase() {
     DayStart.on('value', function (snapshot) {
       const DayValue = snapshot.val();
@@ -126,9 +171,9 @@ const app = {
       $('#day').textContent = DateValue;
     });
   },
+  // hàm tính toán thời gian thả giống
   getSelectedDate() {
-    const dateInput = $("#date-input");
-    const userDate = new Date(dateInput.value);
+    const userDate = new Date($('#date-input').value);
     const currentDate = new Date();
     const day = userDate.getDate();
     const month = userDate.getMonth() + 1;
@@ -137,6 +182,7 @@ const app = {
     const daysDifference = Math.abs(Math.floor(timeDifference / (1000 * 3600 * 24))) - 1;
     return { day, month, year, daysDifference };
   },
+  //hàm gửi dữ liệu ngày/tháng/năm lên firebase
   PushDateToFireBase() {
     const selectedDate = this.getSelectedDate();
     DayStart.set(selectedDate.day);
@@ -144,75 +190,44 @@ const app = {
     YearStart.set(selectedDate.year);
     DateStart.set(selectedDate.daysDifference);
   },
-  //parameter defaults
-  HandleEditBtn(editBtn, SaveBtn, MaxVal, MinVal, MaxInput, MinInput) {
-    editBtn.addEventListener('click', function () {
-      SaveBtn.classList.toggle('hidden');
-      MaxVal.classList.toggle("hidden");
-      MinVal.classList.toggle("hidden");
-      MaxInput.classList.toggle("hidden");
-      MaxInput.focus();
-      MinInput.classList.toggle("hidden");
+  //Xử lý sự kiện chỉnh sửa các giá trị cảm biến tối ưu
+  setupEditor2(editor) {
+    editor.firebaseMaxRef.on('value', (snapshot) => {
+      const value = snapshot.val();
+      editor.MaxValueElement.textContent = editor.displayText(value);
+    });
+    editor.firebaseMinRef.on('value', (snapshot) => {
+      const value = snapshot.val();
+      editor.MinValueElement.textContent = editor.displayText(value);
+    });
+    editor.toggleElement.addEventListener('click', () => {
+      editor.buttonElement.classList.toggle('hidden');
+      editor.MaxValueElement.classList.toggle('hidden');
+      editor.MinValueElement.classList.toggle('hidden');
+      editor.MaxInput.classList.toggle('hidden');
+      editor.MinInput.focus();
+      editor.MinInput.classList.toggle('hidden');
+    });
+    editor.buttonElement.addEventListener('click', () => {
+      editor.buttonElement.classList.toggle('hidden');
+      const newMaxValue = editor.MaxInput.value;
+      const newMinValue = editor.MinInput.value;
+      editor.firebaseMaxRef.set(newMaxValue);
+      editor.firebaseMinRef.set(newMinValue);
+      editor.MaxValueElement.textContent = editor.displayText(newMaxValue);
+      editor.MinValueElement.textContent = editor.displayText(newMinValue);
+      editor.MaxInput.classList.toggle('hidden');
+      editor.MinInput.classList.toggle('hidden');
+      editor.MaxValueElement.classList.toggle('hidden');
+      editor.MinValueElement.classList.toggle('hidden');
     });
   },
-  HandleSaveBtn(MaxRef, MinRef, SaveBtn, MaxVal, MinVal, MaxInput, MinInput) {
-    SaveBtn.addEventListener('click', function () {
-      SaveBtn.classList.toggle('hidden')
-      const newMaxValue = MaxInput.value;
-      const newMinValue = MinInput.value;
-      MaxRef.set(newMaxValue);
-      MinRef.set(newMinValue);
-      MaxVal.textContent = newMaxValue;
-      MinVal.textContent = newMinValue;
-      MaxInput.classList.toggle("hidden");
-      MinInput.classList.toggle("hidden");
-      MaxVal.classList.toggle("hidden");
-      MinVal.classList.toggle("hidden");
-    });
-  },
-  HandleSavePredictions(MaxRef, MinRef,valueMax,ValueMin){
+  //hàm hiển thị giá trị dự đoán máy học
+  HandleSavePredictions(MaxRef, MinRef, valueMax, ValueMin) {
     MaxRef.set(valueMax);
     MinRef.set(ValueMin);
   },
-  //edit temp.
-  HandleEditTemp() {
-    TempMaxRef.on('value', function (snapshot) {
-      TEMPMAX = snapshot.val();
-      $('#temp-max-value').innerHTML = TEMPMAX;
-    });
-    TempMinRef.on('value', function (snapshot) {
-      TEMPMIN = snapshot.val();
-      $('#temp-min-value').innerHTML = TEMPMIN;
-    });
-    this.HandleEditBtn(toggleTemp, $('#temp-btn'), $('#temp-max-value'), $('#temp-min-value'), TempMaxInput, TempMinInput)
-    this.HandleSaveBtn(TempMaxRef, TempMinRef, $('#temp-btn'), $('#temp-max-value'), $('#temp-min-value'), TempMaxInput, TempMinInput);
-  },
-  //edit ph
-  HandleEditPH() {
-    PHMaxRef.on('value', function (snapshot) {
-      PHMAX = snapshot.val();
-      $('#ph-max-value').innerHTML = PHMAX;
-    });
-    PHMinRef.on('value', function (snapshot) {
-      PHMIN = snapshot.val();
-      $('#ph-min-value').innerHTML = PHMIN;
-    });
-    this.HandleEditBtn(togglePH, $('#ph-btn'), $('#ph-max-value'), $('#ph-min-value'), PHMaxInput, PHMinInput)
-    this.HandleSaveBtn(PHMaxRef, PHMinRef, $('#ph-btn'), $('#ph-max-value'), $('#ph-min-value'), PHMaxInput, PHMinInput);
-  },
-  //dirty
-  HandleEditDirty() {
-    DIRTYMaxRef.on('value', function (snapshot) {
-      DIRTYMAX = snapshot.val();
-      $('#dirty-max-value').innerHTML = DIRTYMAX;
-    });
-    DIRTYMinRef.on('value', function (snapshot) {
-      DIRTYMIN = snapshot.val();
-      $('#dirty-min-value').innerHTML = DIRTYMIN;
-    });
-    this.HandleEditBtn(toggleDirty, $('#dirty-btn'), $('#dirty-max-value'), $('#dirty-min-value'), DirtyMaxInput, DirtyMinInput)
-    this.HandleSaveBtn(DIRTYMaxRef, DIRTYMinRef, $('#dirty-btn'), $('#dirty-max-value'), $('#dirty-min-value'), DirtyMaxInput, DirtyMinInput);
-  },
+  //hàm cập nhật các cảnh báo khi vượt ngưỡng
   updateNote(MaxRef, MinRef, Content, MAX, MIN, MaxContent, MinContent, NormalContent, Value) {
     MaxRef.on('value', function (snapshot) {
       MAX = snapshot.val();
@@ -235,6 +250,7 @@ const app = {
       }
     });
   },
+  //hiển thị tiêu đề cảnh báo
   updateNoteContent() {
     //temp
     const tempContent = $("#temp-content");
@@ -246,16 +262,16 @@ const app = {
     var notephMax = 'Độ pH nước QUÁ CAO... '
     var notephMin = 'Độ pH nước QUÁ THẤP... '
     var notephNormal = 'Độ PH ổn định'
-    //dirty
-    const DirtyContent = $("#dirty-content");
-    var noteDirtyMax = 'Độ đục QUÁ CAO... '
-    var noteDirtyMin = 'Độ đục QUÁ THẤP... '
-    var noteDirtyNormal = 'Độ đục của nước ổn định'
-
+    //turb
+    const turbContent = $("#turb-content");
+    var noteturbMax = 'Độ đục QUÁ CAO... '
+    var noteturbMin = 'Độ đục QUÁ THẤP... '
+    var noteturbNormal = 'Độ đục của nước ổn định'
     this.updateNote(TempMaxRef, TempMinRef, tempContent, TEMPMAX, TEMPMIN, noteTempMax, noteTempMin, noteTempNormal, tempValue)
     this.updateNote(PHMaxRef, PHMinRef, phContent, PHMAX, PHMIN, notephMax, notephMin, notephNormal, pHValue)
-    this.updateNote(DIRTYMaxRef, DIRTYMinRef, DirtyContent, DIRTYMAX, DIRTYMIN, noteDirtyMax, noteDirtyMin, noteDirtyNormal, DirtyValue)
+    this.updateNote(turbMaxRef, turbMinRef, turbContent, turbMAX, turbMIN, noteturbMax, noteturbMin, noteturbNormal, turbValue)
   },
+  // hàm xử lý và hiển thị thời gian thực
   updateTime() {
     const now = new Date();
     // Update date
@@ -280,8 +296,9 @@ const app = {
     $('.seconds').textContent = seconds;
     document.querySelector('.period').textContent = ampm;
   },
+  //hàm dự đoán từ mô hình máy học
   HandlePredictions() {
-    const _this=this;
+    const _this = this;
     $("#predict-btn").addEventListener("click", function () {
       var size, DateValue;
       DateStart.on('value', function (snapshot) {
@@ -305,39 +322,40 @@ const app = {
         .then(prediction => {
           var temp = parseFloat(prediction[0][0].toFixed(1)); // Lấy giá trị đầu tiên và làm tròn
           var TempMax = temp + 0.5;
-          var TempMin = temp - 0.5; 
+          var TempMin = temp - 0.5;
           _this.HandleSavePredictions(TempMaxRef, TempMinRef, TempMax, TempMin);
 
           var pH = parseFloat(prediction[0][1].toFixed(1));    // Lấy giá trị thứ hai và làm tròn
           var pHMax = pH + 0.2;
-          var pHMin = pH - 0.2; 
-          _this.HandleSavePredictions(PHMaxRef, PHMinRef, pHMax,pHMin);
+          var pHMin = pH - 0.2;
+          _this.HandleSavePredictions(PHMaxRef, PHMinRef, pHMax, pHMin);
 
           var turb = parseInt(prediction[0][2].toFixed(0));  // Lấy giá trị thứ ba và làm tròn
           var turbMax = turb + 2;
-          var turbMin = turb - 2; 
-          _this.HandleSavePredictions(DIRTYMaxRef, DIRTYMinRef,turbMax, turbMin);
+          var turbMin = turb - 2;
+          _this.HandleSavePredictions(turbMaxRef, turbMinRef, turbMax, turbMin);
         })
         .catch(error => {
           console.error("Lỗi khi gửi dữ liệu:", error);
         });
     });
   },
+  //hàm khởi chạy các chương trình con
   Start() {
     setInterval(() => {
       this.updateNoteContent();
     }, 3000);
     setInterval(this.updateTime, 1000);
     this.GetDateToFireBase();
+    this.HandleEditor();
     this.getParameterToFireBase();
-    this.HandleEditSize();
+    this.setupEditor1(SizeEditor);
+    this.setupEditor1(DelayEditor);
     this.HandleEditTime();
-    this.HandleEditTemp();
-    this.HandleEditPH();
-    this.HandleEditDirty();
+    this.setupEditor2(tempEditor);
+    this.setupEditor2(phEditor);
+    this.setupEditor2(turbEditor);
     this.HandlePredictions();
   }
 }
 app.Start();
-
-

@@ -18,6 +18,7 @@
     <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
         <span class="navbar-brand mb-0 h1 p-3 fw-bold">GIÁM SÁT CHẤT LƯỢNG NƯỚC TRONG AO NUÔI</span>
+        <i class="bi bi-pencil-fill ms-auto text-warning me-3 fs-3" id="toggle-edit"></i>
       </div>
   </div>
   </nav>
@@ -57,16 +58,16 @@
         </div>
         <div class="row m-1 bg-white border border-#e8e5e5">
           <div class="d-flex p-2">
-            <div class="col p-2"><img src="static/assets/img/dirty-icon.png" alt="icon"></div>
+            <div class="col p-2"><img src="static/assets/img/turb-icon.png" alt="icon"></div>
             <div class="col text-center">
-              <div class="value fs-1 fw-bold" id="dirty-val">00</div>
+              <div class="value fs-1 fw-bold" id="turb-val">00</div>
               <div class="fs-3">Độ đục</div>
             </div>
           </div>
           <div class="line"></div>
           <div class="d-flex fs-5">
             <div class="p-3 fw-bold text-warning">NOTE:</div>
-            <div class="p-3" id="dirty-content"></div>
+            <div class="p-3" id="turb-content"></div>
           </div>
         </div>
       </div>
@@ -74,52 +75,53 @@
       <!-- chart -->
       <div class="col-6">
         <div class="row" style="height: 170px;">
-          <div class="m-1 bg-white border border-#e8e5e5 col-4 text-center">
+          <div class="m-1 bg-white border border-#e8e5e5 col text-center">
             <div class="text-center">
               <div class="d-flex mt-2">
-                <div class="fs-3  text-success">Kích thước : </div>
-                <i class="bi bi-pencil-fill ms-auto text-warning mt-2" id="toggle-size"></i>
+                <div class="fs-4 text-success fw-bold">Kích thước : </div>
+                <i class="bi bi-pencil-fill hidden ms-auto text-warning mt-2" id="toggle-size"></i>
               </div>
               <div class="value fs-2 fw-bold mt-2" id="size">00</div>
-              <div class=" hidden form-content mt-3" id="size-form-content">
-              </div>
-              <button type="button" class="hidden mt-2" id="size-btn">Lưu</button>
+              <input type="number" class="hidden mt-3" style="width: 60px;" id="size-input" value="0">
             </div>
+            <button type="button" class="hidden mt-2" id="size-btn">Lưu</button>
           </div>
-          <div class="m-1 bg-white border border-#e8e5e5 col-8 text-center">
-            <div class="d-flex"> <i class="bi bi-pencil-fill ms-auto text-warning" id="toggle-time"></i></div>
-            <div class="d-flex">
-              <div class="col">
-                <div class="calendar">
-                  <span class="day-name">Day</span>
-                  <span class="day-number">00</span>
-                  <span class="month-name">Month</span>
-                  <span class="year">000</span>
-                </div>
-                <div class="digital-clock fs-5 fw-bold">
-                  <span class="hour">00</span>
-                  <span class="dots">:</span>
-                  <span class="minutes">00</span>
-                  <div class="right-side fs-5 fw-bold">
-                    <span class="period">AM/PM</span>
-                    <span class="seconds">00</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="d-flex justify-content-center">
-                  <strong>Ngày thả :</strong>
-                  <div class="print-time">
-                    <span class="day-start">00/</span>
-                    <span class="month-start">00/</span>
-                    <span class="year-start">0000</span>
-                  </div>
-                  <input type="date" class="hidden" id="date-input" min="2022-01-01">
-                </div>
-                <div class="fs-5  text-success">Ngày tuổi</div>
-                <div class="value fs-4 fw-bold" id="day">00</div>
-              </div>
+          <div class="m-1 bg-white border border-#e8e5e5 col text-center">
+            <div class="d-flex"> <i class="bi bi-pencil-fill hidden ms-auto text-warning" id="toggle-delay"></i></div>
+            <div class="calendar">
+              <span class="day-name">Day</span>
+              <span class="day-number">00</span>
+              <span class="month-name">Month</span>
+              <span class="year">000</span>
             </div>
+            <div class="digital-clock fs-5 fw-bold">
+              <span class="hour">00</span>
+              <span class="dots">:</span>
+              <span class="minutes">00</span>
+              <span class="dots">:</span>
+              <span class="seconds">00</span>
+              <span class="period">AM/PM</span>
+            </div>
+            <div class="digital-clock fs-5 fw-bold">
+              <span class="text-success">Lấy mẫu sau: </span>
+              <span class="delay-value fw-bold">00</span>
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="delay-input" value="0">
+            </div>
+            <button type="button" class="hidden" id="delay-btn">Lưu</button>
+          </div>
+          <div class="m-1 bg-white border border-#e8e5e5 col text-center">
+            <div class="d-flex"> <i class="bi bi-pencil-fill hidden ms-auto text-warning" id="toggle-time"></i></div>
+            <div class="d-flex justify-content-center date-cofig">
+              <strong>Ngày thả :</strong>
+              <div class="print-time">
+                <span class="day-start">00/</span>
+                <span class="month-start">00/</span>
+                <span class="year-start">0000</span>
+              </div>
+              <input type="date" class="hidden" id="date-input" min="2022-01-01">
+            </div>
+            <div class="fs-5 text-success fw-bold">Ngày tuổi</div>
+            <div class="value fs-4 fw-bold" id="day">00</div>
             <button type="button" class="hidden" id="time-btn">Lưu</button>
           </div>
         </div>
@@ -135,8 +137,8 @@
       <div class="col">
         <div class="row m-1 bg-white border border-#e8e5e5" style="height: 160px;">
           <div class="d-flex mt-3">
-            <div class="fs-5 text-success">Nhiệt độ tối ưu : </div>
-            <i class="bi bi-pencil-fill ms-auto text-warning mt-1" id="toggle-temp"></i>
+            <div class="fs-5 text-success fw-bold">Nhiệt độ tối ưu : </div>
+            <i class="bi bi-pencil-fill hidden ms-auto text-warning mt-1" id="toggle-temp"></i>
           </div>
           <div class="p-3 pb-5">
             <div class="d-flex">
@@ -158,8 +160,8 @@
         </div>
         <div class="row m-1 bg-white border border-#e8e5e5" style="height: 160px;">
           <div class="d-flex mt-3">
-            <div class="fs-5 text-success">Độ pH tối ưu :</div>
-            <i class="bi bi-pencil-fill ms-auto text-warning mt-1" id="toggle-ph"></i>
+            <div class="fs-5 text-success fw-bold">Độ pH tối ưu :</div>
+            <i class="bi bi-pencil-fill hidden ms-auto text-warning mt-1" id="toggle-ph"></i>
           </div>
           <div class="p-3 pb-5">
             <div class="d-flex">
@@ -181,25 +183,25 @@
         </div>
         <div class="row m-1 bg-white border border-#e8e5e5" style="height: 160px;">
           <div class="d-flex mt-3">
-            <div class="fs-5 text-success">Độ đục tối ưu :</div>
-            <i class="bi bi-pencil-fill ms-auto text-warning mt-1" id="toggle-dirty"></i>
+            <div class="fs-5 text-success fw-bold">Độ đục tối ưu :</div>
+            <i class="bi bi-pencil-fill hidden ms-auto text-warning mt-1" id="toggle-turb"></i>
           </div>
           <div class="p-3 pb-5">
             <div class="d-flex">
               <div class="col fs-5">MAX :</div>
               <div class="d-flex">
-                <div class="col fs-6 ms-auto fw-bold" id="dirty-max-value">00</div>
+                <div class="col fs-6 ms-auto fw-bold" id="turb-max-value">00</div>
               </div>
-              <input type="number" class="hidden ms-auto" style="width: 50px;" id="dirty-max-input" value="0">
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="turb-max-input" value="0">
             </div>
             <div class="d-flex mt-1">
               <div class="col fs-5">MIN :</div>
               <div class="d-flex">
-                <div class="col fs-6 fw-bold ms-auto" id="dirty-min-value">00</div>
+                <div class="col fs-6 fw-bold ms-auto" id="turb-min-value">00</div>
               </div>
-              <input type="number" class="hidden ms-auto" style="width: 50px;" id="dirty-min-input" value="0">
+              <input type="number" class="hidden ms-auto" style="width: 50px;" id="turb-min-input" value="0">
             </div>
-            <div class="text-center"><button class="hidden" id="dirty-btn">Lưu</button></div>
+            <div class="text-center"><button class="hidden" id="turb-btn">Lưu</button></div>
           </div>
         </div>
         <div class="row text-center">
@@ -224,9 +226,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
     integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
     crossorigin="anonymous"></script>
-  <script src="static/assets/js/firebase.js"></script>"
-  <script src="static/assets/js/main.js"></script>
-  <script src="static/assets/js/chart.js"></script>
+  <script type="module" src="static/assets/js/firebase.js"></script>"
+  <script type="module" src="static/assets/js/main.js"></script>
+  <script type="module" src="static/assets/js/chart.js"></script>
+  <script type="module" src="static/assets/js/sms.js"></script>
 </body>
-
 </html>
