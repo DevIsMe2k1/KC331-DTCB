@@ -21,14 +21,14 @@ const SMS = {
 
                     if (maxValue < liveValue) {
                         this.sendSMS({"title": message.highValue,
-                            "LiveVal": `Giá trị hiện tại : ${liveValue}`,
-                            "defaultValue": `Lớn hơn giá trị tối ưu : ${maxValue}`});
+                            "LiveVal": ` - Giá trị hiện tại : ${liveValue}`,
+                            "defaultValue": ` - Lớn hơn giá trị tối ưu : ${maxValue}`});
                     }
 
                     if (minValue > liveValue) {
                         this.sendSMS({"title": message.lowValue,
-                            "LiveVal": `Giá trị hiện tại :  ${liveValue}`,
-                            "defaultValue": `Nhỏ hơn giá trị tối ưu : ${minValue}`});
+                            "LiveVal": ` - Giá trị hiện tại :  ${liveValue}`,
+                            "defaultValue": ` - Nhỏ hơn giá trị tối ưu : ${minValue}`});
                     }
                 });
             });
@@ -36,16 +36,16 @@ const SMS = {
     },
     start() {
         const tempMessage = {
-            highValue: "Nhiệt độ quá cao",
-            lowValue: "Nhiệt độ quá thấp"
+            highValue: "Nhiệt độ quá cao !",
+            lowValue: "Nhiệt độ quá thấp !"
         };
         const phMessage = {
-            highValue: "Độ PH quá cao",
-            lowValue: "Độ PH quá thấp"
+            highValue: "Độ PH quá cao !",
+            lowValue: "Độ PH quá thấp !"
         };
         const turbMessage = {
-            highValue: "Độ đục quá cao",
-            lowValue: "Độ đục quá thấp"
+            highValue: "Độ đục quá cao !",
+            lowValue: "Độ đục quá thấp !"
         };
         this.ListenChange(tempRef, TempMaxRef, TempMinRef, tempMessage);
         this.ListenChange(pHRef, PHMaxRef, PHMinRef, phMessage);

@@ -320,14 +320,15 @@ const app = {
       })
         .then(response => response.json())
         .then(prediction => {
-          var temp = parseFloat(prediction[0][0].toFixed(1)); // Lấy giá trị đầu tiên và làm tròn
-          var TempMax = temp + 0.5;
-          var TempMin = temp - 0.5;
+          // console.log(prediction);
+          var temp = parseFloat(prediction[0][0]);
+          var TempMax = (temp + 0.3).toFixed(1);
+          var TempMin = (temp - 0.3).toFixed(1);
           _this.HandleSavePredictions(TempMaxRef, TempMinRef, TempMax, TempMin);
 
-          var pH = parseFloat(prediction[0][1].toFixed(1));    // Lấy giá trị thứ hai và làm tròn
-          var pHMax = pH + 0.2;
-          var pHMin = pH - 0.2;
+          var pH = parseFloat(prediction[0][1]);
+          var pHMax = (pH + 0.2).toFixed(1);
+          var pHMin = (pH - 0.2).toFixed(1);
           _this.HandleSavePredictions(PHMaxRef, PHMinRef, pHMax, pHMin);
 
           var turb = parseInt(prediction[0][2].toFixed(0));  // Lấy giá trị thứ ba và làm tròn

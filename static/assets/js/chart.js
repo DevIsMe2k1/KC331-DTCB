@@ -1,85 +1,70 @@
 import { tempRef, pHRef, turbRef } from './main.js';
+
 const chartCanvas = document.getElementById("realTimeChart");
-const ctx = chartCanvas.getContext("2d");
-const chart = new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: [],
-        datasets: [
-            {
-                label: "Temperature",
-                data: [],
-                borderColor: "red",
-                fill: true,
-                cubicInterpolationMode: 'monotone' // Make lines softer
-            },
-            {
-                label: "pH",
-                data: [],
-                borderColor: "green",
-                fill: true,
-                cubicInterpolationMode: 'monotone'
-            },
-            {
-                label: "Turbidity",
-                data: [],
-                borderColor: "blue",
-                fill: true,
-                cubicInterpolationMode: 'monotone'
-            }
-        ]
-    },
+
+let data = {
+    labels: [],
+    datasets: [{
+        label: 'Temperature',
+        data: [],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+    }, {
+        label: 'pH',
+        data: [],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+    }, {
+        label: 'Turbidity',
+        data: [],
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 1
+    }]
+};
+
+let config = {
+    type: 'line',
+    data,
     options: {
-        responsive: true,
         scales: {
-            x: {
-                display: true
-            },
-            y: {
-                display: true
-            }
-        },
-        plugins: {
-            legend: {
-                labels: {
-                    // Customize the legend label
-                    filter: function (legendItem, chartData) {
-                        return legendItem.text !== 'Hidden'; // Hide the legend item with text 'Hidden'
-                    }
+            xAxes: [{
+                type: 'time',
+                time: {
+                    unit: 'second'
                 }
-            }
+            }]
         }
     }
+};
+
+let chart = new Chart(chartCanvas, config);
+
+let tempValue, pHValue, turbValue;
+
+tempRef.on('value', (tempSnapshot) => {
+    tempValue = tempSnapshot.val();
 });
 
-// Update the chart with new data
-function updateChart(time, tempValue, pHValue, turbValue) {
-    chart.data.labels.push(time);
-    chart.data.datasets[0].data.push(tempValue);
-    chart.data.datasets[1].data.push(pHValue);
-    chart.data.datasets[2].data.push(turbValue);
+pHRef.on('value', (pHSnapshot) => {
+    pHValue = pHSnapshot.val();
+});
 
-    // Remove the oldest data when the limit is reached (20 data points)
-    if (chart.data.labels.length > 10) {
-        chart.data.labels.shift();
-        chart.data.datasets[0].data.shift();
-        chart.data.datasets[1].data.shift();
-        chart.data.datasets[2].data.shift();
-    }
+turbRef.on('value', (turbSnapshot) => {
+    turbValue = turbSnapshot.val();
 
-    chart.update();
-}
-
-// Listen for changes in Firebase data
-tempRef.on('value', (snapshot) => {
     const now = new Date();
-    const time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(); // Format time to display hour and minute
-    const tempValue = snapshot.val();
-    pHRef.on('value', (snapshot) => {
-        const pHValue = snapshot.val();
-        turbRef.on('value', (snapshot) => {
-            const turbValue = snapshot.val();
-            updateChart(time, tempValue, pHValue, turbValue);
-        });
-    });
+    const time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+
+    data.labels.push(time);
+    data.datasets[0].data.push(tempValue);
+    data.datasets[1].data.push(pHValue);
+    data.datasets[2].data.push(turbValue);
+    
+    if (data.labels.length > 30) {
+        data.labels.shift();
+        data.datasets[0].data.shift();
+        data.datasets[1].data.shift();
+        data.datasets[2].data.shift();
+    }
+    chart.update();
 });

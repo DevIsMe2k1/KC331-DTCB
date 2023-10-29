@@ -22,7 +22,7 @@ def sendSMS():
         title = data["title"]
         content1 = data["LiveVal"]
         content2 = data["defaultValue"]
-        send_sms(title + " ! " + content1 + content2)
+        # send_sms(title + content1 + content2)
         return "SMS sent successfully"
     except Exception as e:
         return f"Error: {str(e)}", 500
